@@ -1,0 +1,469 @@
+:root {
+  color-scheme: dark;
+  --bg: #020617;
+  --bg-elevated: #020617;
+  --bg-card: #020617;
+  --border-subtle: #1e293b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --danger: #f97373;
+  --success: #22c55e;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.7);
+  --shadow-subtle: 0 10px 30px rgba(15, 23, 42, 0.6);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+}
+
+body {
+  overflow: auto;
+}
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: radial-gradient(circle at top, #0f172a 0, #020617 45%);
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Top bar: controls + summary */
+
+.top-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.controls {
+  flex: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-xl);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: var(--shadow-subtle);
+}
+
+.controls-left,
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sim-time-label {
+  margin-left: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.controls-right span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+/* Buttons */
+
+.btn {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.85);
+  color: #e5e7eb;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn.small {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+}
+
+.btn.primary {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  color: #0b1120;
+  font-weight: 600;
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.8);
+}
+
+/* Fleet summary cards */
+
+.fleet-summary {
+  flex: 1.4;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.metric-card {
+  padding: 8px 10px;
+  border-radius: var(--radius-lg);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: var(--shadow-subtle);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.metric-value {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Main layout */
+
+.main-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.4fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  min-height: 0; /* IMPORTANT for scroll */
+  height: 0; /* Forces children to be scroll-controlled */
+  overflow: hidden;
+}
+
+/* Left panel – trip list */
+
+.left-panel,
+.right-panel {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.trip-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.trip-list-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.trip-list-header h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.muted {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.trip-list-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.trip-row {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 0.75rem;
+  padding: 8px 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  border: 1px solid rgba(30, 64, 175, 0.35);
+}
+
+.trip-row:hover {
+  background: rgba(15, 23, 42, 1);
+  transform: translateY(-1px);
+}
+
+.trip-row-selected {
+  background: rgba(15, 23, 42, 1);
+  border-color: var(--accent);
+  box-shadow: 0 8px 22px rgba(56, 189, 248, 0.25);
+}
+
+.trip-row-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trip-row-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trip-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+}
+
+.badge {
+  width: 8px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.trip-row-status {
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.status-text {
+  display: block;
+  text-transform: capitalize;
+}
+
+.completion {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.trip-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.alerts-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(248, 113, 113, 0.14);
+  color: #fecaca;
+}
+
+/* Right panel – map + details */
+
+.right-panel {
+  border-radius: var(--radius-xl);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: var(--shadow-soft);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fleet-map h2,
+.trip-details h2 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.fleet-map {
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at top left, #0f172a, #020617);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* Trip details */
+
+.trip-details {
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.trip-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.value {
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.alerts-section {
+  margin-top: 10px;
+}
+
+.alerts-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 0.8rem;
+  color: #fecaca;
+}
+
+/* Empty states */
+
+.empty-state {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 0.75rem;
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.empty-state.small {
+  padding: 4px 8px;
+}
+
+/* Footer */
+
+.footer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* Scrollbar styling */
+
+.trip-list-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.trip-list-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.trip-list-body::-webkit-scrollbar-thumb {
+  background: rgba(30, 64, 175, 0.6);
+  border-radius: 999px;
+}
+
+/* Responsive */
+
+@media (max-width: 1050px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .left-panel {
+    max-height: 250px;
+  }
+
+  .right-panel {
+    max-height: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .top-bar {
+    flex-direction: column;
+  }
+
+  .fleet-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-panel {
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fleet-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .controls-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .trip-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
